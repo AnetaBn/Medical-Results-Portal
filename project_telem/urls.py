@@ -20,7 +20,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path("", include("wyniki.urls")),
     path('admin/', admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls"))  # login user
+    path("accounts/", include("django.contrib.auth.urls")),  # login user
+    path('legacy/', include('legacy.urls'))
+    # path("", include('legacy.urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()

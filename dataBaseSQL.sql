@@ -46,3 +46,10 @@ CREATE TABLE study
 	FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
     FOREIGN KEY (doctor_id) REFERENCES doctor(doctor_id)
 );
+
+-- for beginning, to remove later
+
+INSERT INTO doctor (doctor_name, specialization) VALUES ('Anna May', 'radiology'); 
+INSERT INTO doctor (doctor_name, specialization) VALUES ('John Watson', 'general medicine');
+INSERT INTO patient (patient_name, age, gender) VALUES ('Sherlock Holmes', 40, 'male');
+INSERT INTO study (hospital, study_date, modality, pathFile, patient_id, doctor_id) VALUES ('NN', '2000-01-01','CT','NN', (SELECT patient_id FROM patient WHERE patient_name ='Sherlock Holmes'), (SELECT doctor_id FROM doctor WHERE doctor_name ='Anna May'));
