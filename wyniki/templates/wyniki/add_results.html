@@ -7,12 +7,17 @@ Add new result
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
     </head>
     <body>
-    <form action="/team_name_url/" method="post">
+    <!-- <form action="/team_name_url/" method="post"> -->
+    <form action="create_study" method="post">
+        {% csrf_token %}
         <label for="patient_name">Patient name and surname: </label>
-        <input id="patient_name" type="text" name="your_name">
+        <input id="patient_name" type="text" name="patient_name">
         <br>
-        <label for="type">Type of examination: </label>
+        <label for="type">Type of examination (modality): </label>
         <input id="type" type="text" name="type">
+        <br>
+        <label for="hospital">Hospital of examination: </label>
+        <input id="hospital" type="text" name="hospital">
         <br>
         <label for="date">Date of examination: </label>
         <input id="date" type="date" name="date"  max="datetime.now()">
@@ -25,5 +30,6 @@ Add new result
         <br>
         <input type="submit" value="Save">
     </form>
+    {{msg}}
     </body>
 {% endblock %}

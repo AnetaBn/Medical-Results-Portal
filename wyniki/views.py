@@ -3,6 +3,8 @@ from django.utils.timezone import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
 from django import template
+from legacy.models import Doctor, Patient, Study
+# from .models import Doctor, Patient, Study
 
 
 def home(request):
@@ -29,11 +31,33 @@ def add_results(request, name):
         request,
         'wyniki/add_results.html',
         {
-            'name': name,
+            # 'name': name,
+            'msg': name
         }
     )
 
 
-def is_member(user):
-    return user.groups.filter(name='Lekarze').exists()
+def create_study(request, name):
+    if request.method == 'POST':
+        if request.POST.get('patient_name') and request.POST.get('hospital') and request.POST.get('date') and request.POST.get('type'):
+            one_study=Study()
+            one_study.hospital = request.POST.get('hospital')
+            one_study.study_date = request.POST.get('date')
+            one_study.modality = request.POST.get('type')
+            one_study.pathfile = 'NN'
+            one_study.patient = Patient.objects.get(patient_name = request.POST.get('patient_name'))
+            one_study.doctor = Doctor.objects.get(doctor_name = 'John Watson') # to change
+            one_study.save()
+            msge ="Data inserted to study table with id: " + str(one_study.study_id)
+        else:
+            msge=name
+    else:
+        msge=name
 
+    return render(request,'wyniki/add_results.html',
+        {
+            'msg': msge,
+        }
+    )
+
+# https://stackoverflow.com/questions/55652043/django-save-method-in-a-different-database
