@@ -10,8 +10,8 @@ Add new result
     <!-- <form action="/team_name_url/" method="post"> -->
     <form action="create_study" method="post">
         {% csrf_token %}
-        <label for="patient_name">Patient name and surname: </label>
-        <input id="patient_name" type="text" name="patient_name">
+        <label for="patient_id">Patient ID: </label>
+        <input id="patient_id" type="text" name="patient_id">
         <br>
         <label for="type">Type of examination (modality): </label>
         <input id="type" type="text" name="type">
