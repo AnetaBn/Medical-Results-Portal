@@ -1,0 +1,41 @@
+{% extends "wyniki/layout.html" %}
+{% block title %}
+History of results
+{% endblock %}
+{% block content %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
+    </head>
+    <body>
+    {% if user.username in doctor_list %}
+        <table id="study" class="center">
+            <tr>
+                <th><strong>Type of study</strong></th>
+                 <th><strong>Patient</strong></th>
+                 <th><strong>Date</strong></th>
+                 <th></th>
+            </tr>
+            {% for result in doctor_results %}
+                    <tr>
+                        <td>{{ result.modality }}</td>
+                        <td>{{ result.patient.patient_name}}</td>
+                        <td>{{ result.study_date}}</td>
+                        <td><a href="{% url 'edit_results' user.username result.study_id%}"><span class="edit">&#9998;</span></a></td>
+                    </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <strong>No studies to show</strong>
+    {% endif %}
+
+
+<script>
+    function rep(doctor_name){
+        return doctor_name.replaceAll(" ", "")
+    }
+</script>
+
+
+
+    </body>
+{% endblock %}

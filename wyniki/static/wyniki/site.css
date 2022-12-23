@@ -33,7 +33,7 @@
 
 label {
     display: inline-block;
-    width: 200px;
+    width: 300px;
     text-align: right;
     margin-bottom: 20px;
 }
@@ -50,4 +50,50 @@ input[type="submit"]{
     /*margin: 20px;*/
     margin-left: 50%;
     margin-right: 50%;
+}
+
+.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#study{
+    border-collapse: collapse;
+    border: 1px solid lightslategray;
+    width: 100%;
+}
+
+#study td, #study th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#study tr:nth-child(even){background-color: #f2f2f2;}
+
+#study tr:hover {background-color: #ddd;}
+
+#study th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: lightslategray;
+  color: white;
+}
+
+#study th:nth-child(4), #study td:nth-child(4){
+    text-align: center;
+
+}
+
+.edit{
+    color: lightslategray;
+    cursor: pointer;
+    text-align: center;
+}
+
+.home{
+    color: white;
+}
+a:link {
+  text-decoration: none;
 }

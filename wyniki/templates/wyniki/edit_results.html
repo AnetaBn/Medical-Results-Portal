@@ -1,0 +1,34 @@
+{% extends "wyniki/layout.html" %}
+{% block title %}
+Edit result
+{% endblock %}
+{% block content %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
+    </head>
+    <body>
+    <form action="edit_study" method="post">
+        {% csrf_token %}
+        <label for="patient_id">Patient ID: </label>
+        <input id="patient_id" type="text" name="patient_id" value={{ result.patient_id }} >
+        <br>
+        <label for="type">Type of examination (modality): </label>
+        <input id="type" type="text" name="type" value={{ result.modality }}>
+        <br>
+        <label for="hospital">Hospital of examination: </label>
+        <input id="hospital" type="text" name="hospital" value={{ result.hospital }}>
+        <br>
+        <label for="date">Date of examination: </label>
+        <input id="date" type="date" name="date" value={{ result.study_date }}>
+        <br>
+        <label for="time">Time of examination: </label>
+        <input id="time" type="time" name="time" >
+        <br>
+        <label for="note">Note: </label>
+        <input id="note" type="text" name="note" >
+        <br>
+        <input type="submit" value="Edit">
+    </form>
+    {{msg}}
+    </body>
+{% endblock %}

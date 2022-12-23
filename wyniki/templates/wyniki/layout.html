@@ -10,6 +10,7 @@
 <body>
 <div class="navbar">
     <a href="{% url 'home' %}" class="navbar-brand">Home</a>
+    <span class="home">&#9825;</span>
     <a href="{% url 'about' %}" class="navbar-item">About</a>
     {% if user.is_authenticated %}
         <a href="{% url 'hello_there' user.username %}"  class="navbar-item">Hello there</a>
@@ -26,7 +27,7 @@
     {% endblock %}
     <hr/>
     <footer>
-        <p>&copy; 2018</p>
+        <p>&copy; 2022</p>
     </footer>
 </div>
 </body>
