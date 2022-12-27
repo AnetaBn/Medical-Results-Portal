@@ -5,9 +5,7 @@ Add new result
 {% block content %}
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
-    </head>
     <body>
-    <!-- <form action="/team_name_url/" method="post"> -->
     <form action="create_study" method="post">
         {% csrf_token %}
         <label for="patient_id">Patient ID: </label>

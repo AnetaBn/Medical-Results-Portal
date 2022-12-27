@@ -1,7 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.timezone import datetime
 from legacy.models import Doctor, Patient, Study
-
 
 # from .models import Doctor, Patient, Study
 
@@ -37,17 +36,30 @@ def add_results(request, name):
 
 def edit_results(request, name, result_id):
     edited_result = Study.objects.get(study_id=result_id)
+    result_date = str(edited_result.study_date)
 
+    if request.method == 'POST':
+        if request.POST.get('patient_id') and request.POST.get('hospital') and request.POST.get(
+                'date') and request.POST.get('type'):
+            edited_result.hospital = request.POST.get('hospital')
+            edited_result.study_date = request.POST.get('date')
+            edited_result.modality = request.POST.get('type')
+            edited_result.save()
+            msge = "Data updated to study table with id: " + str(edited_result.study_id)
+            result_date = str(edited_result.study_date)
+    else:
+        msge = name
     return render(
         request,
         'wyniki/edit_results.html',
         {
             'name': name,
-            'msg': name,
+            'msg': msge,
             'result': edited_result,
-
+            'date': result_date
         }
     )
+
 
 
 def create_study(request, name):

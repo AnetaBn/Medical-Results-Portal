@@ -31,6 +31,12 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+img{
+    width: 25px;
+    height: 25px;
+    vertical-align: bottom;
+}
+
 label {
     display: inline-block;
     width: 300px;
@@ -97,3 +103,4 @@ input[type="submit"]{
 a:link {
   text-decoration: none;
 }
+

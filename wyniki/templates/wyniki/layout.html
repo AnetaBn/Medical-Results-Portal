@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +11,17 @@
 <body>
 <div class="navbar">
     <a href="{% url 'home' %}" class="navbar-brand">Home</a>
-    <span class="home">&#9825;</span>
+    <a href="{% url 'home' %}" class="navbar-brand"><img src="../../static/wyniki/images/heart.png" alt="heart"></a>
     <a href="{% url 'about' %}" class="navbar-item">About</a>
     {% if user.is_authenticated %}
         <a href="{% url 'hello_there' user.username %}"  class="navbar-item">Hello there</a>
+        <a href="{% url 'history' user.username %}"  class="navbar-item">History</a>
+        {% if request.user.groups.all.0.name == 'Lekarze' %}
+            <a href="{% url 'add_results' user.username %}" class="navbar-item">Add new results</a>
+        {% endif %}
         <a style="float:right" class="navbar-item">{{ user.username }}</a>
-
     {% endif %}
-
     <a style="float:right" class="navbar-item"></a>
-
 </div>
 
 <div class="body-content">
