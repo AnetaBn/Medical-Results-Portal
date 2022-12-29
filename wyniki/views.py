@@ -70,8 +70,13 @@ def create_study(request, name):
             one_study.hospital = request.POST.get('hospital')
             one_study.study_date = request.POST.get('date')
             one_study.modality = request.POST.get('type')
+            one_study.pathfile = request.POST.get('pathfile')
             one_study.patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
             one_study.doctor = Doctor.objects.get(doctor_name='John Watson')  # to change
+            
+            if len(request.FILES) != 0:
+                one_study.image = request.FILES['image']
+            
             one_study.save()
             msge = "Data inserted to study table with id: " + str(one_study.study_id)
         else:
