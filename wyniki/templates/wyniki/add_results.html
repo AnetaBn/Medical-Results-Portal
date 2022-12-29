@@ -6,7 +6,7 @@ Add new result
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
     <body>
-    <form action="create_study" method="post">
+    <form action="create_study" method="post" enctype = "multipart/form-data">
         {% csrf_token %}
         <label for="patient_id">Patient ID: </label>
         <input id="patient_id" type="text" name="patient_id">
@@ -25,6 +25,12 @@ Add new result
         <br>
         <label for="note">Note: </label>
         <input id="note" type="text" name="note">
+        <br>
+        <label for="pathfile">Image URL: </label>
+        <input id="pathfile" type="text" name="pathfile">
+        <br>
+        <label for="image">Image object: </label>
+        <input id="actual-btn" type="file" name="image">
         <br>
         <input type="submit" value="Save">
     </form>
