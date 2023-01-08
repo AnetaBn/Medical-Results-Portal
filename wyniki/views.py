@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import datetime
 from legacy.models import Doctor, Patient, Study
-
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 # from .models import Doctor, Patient, Study
 
 def home(request):
@@ -22,13 +23,20 @@ def hello_there(request, name):
         }
     )
 
+def register_patient(request):
+    return render(request, "wyniki/register_patient.html"
+    )
+
+def register_doctor(request):
+    return render(request, "wyniki/register_doctor.html"
+)
+
 
 def add_results(request, name):
     return render(
         request,
         'wyniki/add_results.html',
         {
-            # 'name': name,
             'msg': name
         }
     )
@@ -61,7 +69,6 @@ def edit_results(request, name, result_id):
     )
 
 
-
 def create_study(request, name):
     if request.method == 'POST':
         if request.POST.get('patient_id') and request.POST.get('hospital') and request.POST.get(
@@ -88,10 +95,11 @@ def create_study(request, name):
                   {
                       'msg': msge,
                   }
-                  )
+    )
 
 
 # HOW TO DELETE - USEFUL COMMAND!!!
+# Doctor.objects.filter(doctor_name="Gregory House").delete()
 # https://stackoverflow.com/questions/3805958/how-to-delete-a-record-in-django-models
 
 def history(request, name):
@@ -112,4 +120,66 @@ def history(request, name):
             'doctor_list': doctor_list,
             'doctor_results': doctor_results,
         }
+    )
+
+
+def create_patient(request):
+    if request.method == 'POST':
+        if request.POST.get('newUserName') and request.POST.get('firstname') and request.POST.get(
+                'lastname') and request.POST.get('age') and request.POST.get('gender') and request.POST.get(
+                'password1') and request.POST.get('password2') and request.POST.get('email'):
+            
+            if(request.POST.get('password1')==request.POST.get('password2')):
+                new_user = User.objects.create(username=request.POST.get('newUserName'), email=request.POST.get('email'), password=request.POST.get('password2'))
+                new_user.first_name = request.POST.get('firstname')
+                new_user.last_name = request.POST.get('lastname')
+                new_user.save()
+                my_group = Group.objects.get(name='Pacjenci') 
+                my_group.user_set.add(new_user)
+
+            one_person = Patient()
+            one_person.patient_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
+            one_person.age = request.POST.get('age')
+            one_person.gender = request.POST.get('gender')            
+            one_person.save()
+            msge = "Registration successful. Data inserted to patient table with id: " + str(one_person.patient_id)
+        else:
+            msge = "Unsuccessful"
+    else:
+        msge = "Unsuccessful"
+
+    return render(request, 'wyniki/home.html',
+                  {
+                      'msg': msge,
+                  }
+    )
+
+def create_doctor(request):
+    if request.method == 'POST':
+        if request.POST.get('newUserName') and request.POST.get('firstname') and request.POST.get(
+                'lastname') and request.POST.get('specialization') and request.POST.get(
+                'password1') and request.POST.get('password2') and request.POST.get('email'):
+            
+            if(request.POST.get('password1')==request.POST.get('password2')):
+                new_user = User.objects.create(username=request.POST.get('newUserName'), email=request.POST.get('email'), password=request.POST.get('password2'))
+                new_user.first_name = request.POST.get('firstname')
+                new_user.last_name = request.POST.get('lastname')
+                new_user.save()
+                my_group = Group.objects.get(name='Lekarze') 
+                my_group.user_set.add(new_user)
+
+            one_person = Doctor()
+            one_person.doctor_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
+            one_person.specialization = request.POST.get('specialization')         
+            one_person.save()
+            msge = "Registration successful. Data inserted to doctor table with id: " + str(one_person.doctor_id)
+        else:
+            msge = "Unsuccessful"
+    else:
+        msge = "Unsuccessful"
+
+    return render(request, 'wyniki/home.html',
+                  {
+                      'msg': msge,
+                  }
     )

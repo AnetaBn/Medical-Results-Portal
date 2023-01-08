@@ -11,6 +11,10 @@ urlpatterns = [
     path("wyniki/<name>/edit/<result_id>", views.edit_results, name="edit_results"),
     path("wyniki/<name>/history", views.history, name="history"),
     path("about/", views.about, name="about"),
+    path("register_patient/", views.register_patient, name="register_patient"),
+    path("register_doctor/", views.register_doctor, name="register_doctor"),
+    path("register_patient/create_patient", views.create_patient, name="create_patient"),
+    path("register_doctor/create_doctor", views.create_doctor, name="create_doctor"),
 ]
 
 if settings.DEBUG:
