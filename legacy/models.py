@@ -1,6 +1,4 @@
 from django.db import models
-import datetime
-import os
 
 
 class Doctor(models.Model):
@@ -24,22 +22,17 @@ class Patient(models.Model):
         managed = True
         db_table = 'patient'
 
-def get_filename(instance,filename):
-    old_name = filename
-    current_time = datetime.datetime.now().strftime('%Y%m%d%H;%M:%S')
-    filename = "%s%s" % (current_time,old_name)
-    return os.path.join('uploads/',filename)
-
 
 class Study(models.Model):
     study_id = models.BigAutoField(primary_key=True)
     hospital = models.CharField(max_length=64, blank=True, null=True)
     study_date = models.DateField(blank=True, null=True)
+    study_time = models.CharField(max_length=64, blank=True, null=True)
     modality = models.CharField(max_length=10, blank=True, null=True)
     pathfile = models.CharField(db_column='pathFile', max_length=100, blank=True, null=True)
     patient = models.ForeignKey(Patient, models.DO_NOTHING, blank=True, null=True)
     doctor = models.ForeignKey(Doctor, models.DO_NOTHING, blank=True, null=True)
-    image = models.ImageField(upload_to=get_filename, blank=True, null=True)
+    image = models.ImageField(upload_to=None, max_length=100, blank=True, null=True)
 
     class Meta:
         managed = True

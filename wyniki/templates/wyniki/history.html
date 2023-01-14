@@ -7,25 +7,31 @@ History of results
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
     </head>
     <body>
-    {% if user.username in doctor_list %}
-        <table id="study" class="center">
+{#    {% if user.username in doctor_list %}#}
+        <table id="study" class="history_table">
             <tr>
                 <th><strong>Type of study</strong></th>
                  <th><strong>Patient</strong></th>
                  <th><strong>Date</strong></th>
-                 <th></th>
+                 <th>Edit</th>
+                 <th>Preview</th>
             </tr>
-            {% for result in doctor_results %}
+            {% for result in results_list %}
                     <tr>
                         <td>{{ result.modality }}</td>
                         <td>{{ result.patient.patient_name}}</td>
                         <td>{{ result.study_date}}</td>
-                        <td><a href="{% url 'edit_results' user.username result.study_id%}"><span class="edit">&#9998;</span></a></td>
+                        {% if result in doctor_results %}
+                            <td><a href="{% url 'edit_results' user.username result.study_id%}"><span class="edit">&#9998;</span></a></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td><a href="{% url 'see_results' user.username result.study_id%}"><span class="see">&#128065;</span></a></td>
                     </tr>
             {% endfor %}
         </table>
-    {% else %}
-        <strong>No studies to show</strong>
-    {% endif %}
+{#    {% else %}#}
+{#        <strong>No studies to show</strong>#}
+{#    {% endif %}#}
     </body>
 {% endblock %}
