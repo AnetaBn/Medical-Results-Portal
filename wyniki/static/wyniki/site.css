@@ -44,23 +44,51 @@ label {
     margin-bottom: 20px;
 }
 
-input[type="text"]{
-   width: 400px;
+.textLable {
+    display: inline-block;
+    width: 300px;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.preview {
+    display: inline;
+    color: lightslategray;
+    font-weight: bold;
 }
 
 
+input[type="text"]{
+   width: 400px;
+}
 
 input[type="submit"]{
     background-color: lightslategray;
     color: white;
     border: lightslategray;
     cursor: pointer;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 7px;
     /*margin: 20px;*/
     margin-left: 50%;
     margin-right: 50%;
 }
 
-.center{
+.button{
+    background-color: lightslategray;
+    color: white;
+    border: lightslategray;
+    cursor: pointer;
+    padding: 3px 15px;
+    text-align: center;
+    border-radius: 7px;
+    /*margin: 20px;*/
+    margin-left: 50%;
+    margin-right: 50%;
+}
+
+.history_table{
     margin-left: auto;
     margin-right: auto;
 }
@@ -88,7 +116,7 @@ input[type="submit"]{
   color: white;
 }
 
-#study th:nth-child(4), #study td:nth-child(4){
+#study th:nth-child(4), #study td:nth-child(4), #study th:nth-child(5), #study td:nth-child(5){
     text-align: center;
 
 }
@@ -97,6 +125,17 @@ input[type="submit"]{
     color: lightslategray;
     cursor: pointer;
     text-align: center;
+}
+
+.see{
+    color: lightslategray;
+    cursor: pointer;
+    text-align: center;
+}
+
+.textarea {
+    vertical-align: middle;
+    width: 400px;
 }
 
 .home{
