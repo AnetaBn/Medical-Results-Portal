@@ -133,6 +133,14 @@ input[type="submit"]{
     text-align: center;
 }
 
+<<<<<<< HEAD
+=======
+.textarea {
+    vertical-align: middle;
+    width: 400px;
+}
+
+>>>>>>> 387f0234c572de15ef1a0c789cc1e75ecfe0d55a
 .home{
     color: white;
 }

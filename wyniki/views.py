@@ -60,6 +60,32 @@ def see_results(request, name, result_id):
     )
 
 
+def see_results(request, name, result_id):
+    preview = Study.objects.get(study_id=result_id)
+    result_date = str(preview.study_date)
+    doctor_name = preview.doctor.doctor_name.replace(" ", "")
+    if request.method == 'POST':
+        preview.hospital = request.POST.get('hospital')
+        preview.study_date = request.POST.get('date')
+        preview.study_time = request.POST.get('time')
+        preview.modality = request.POST.get('type')
+        preview.note = request.POST.get('note')
+        preview.filepath = request.POST.get('pathfile')
+
+    else:
+        msge = name
+    return render(
+        request,
+        'wyniki/see_results.html',
+        {
+            'name': name,
+            'msg': msge,
+            'result': preview,
+            'date': result_date,
+            'doctor_name': doctor_name
+        }
+    )
+
 def edit_results(request, name, result_id):
     edited_result = Study.objects.get(study_id=result_id)
     result_date = str(edited_result.study_date)
@@ -71,6 +97,11 @@ def edit_results(request, name, result_id):
             edited_result.study_date = request.POST.get('date')
             edited_result.study_time = request.POST.get('time')
             edited_result.modality = request.POST.get('type')
+            edited_result.note = request.POST.get('note')
+            edited_result.filepath = request.POST.get('pathfile')
+            if len(request.FILES) != 0:
+                edited_result.image = request.FILES['image']
+
             edited_result.save()
             msge = "Data updated to study table with id: " + str(edited_result.study_id)
             result_date = str(edited_result.study_date)
@@ -97,8 +128,13 @@ def create_study(request, name):
             one_study.study_date = request.POST.get('date')
             one_study.study_time = request.POST.get('time')
             one_study.modality = request.POST.get('type')
+            one_study.pathfile = request.POST.get('pathfile')
             one_study.patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
-            one_study.doctor = Doctor.objects.get(doctor_name=f'{request.user.first_name} {request.user.last_name}')  # to change
+            one_study.doctor = Doctor.objects.get(doctor_name='John Watson')  # to change
+            
+            if len(request.FILES) != 0:
+                one_study.image = request.FILES['image']
+            
             one_study.save()
             msge = "Data inserted to study table with id: " + str(one_study.study_id)
         else:

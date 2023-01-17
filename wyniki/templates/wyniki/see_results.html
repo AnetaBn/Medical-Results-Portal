@@ -23,8 +23,20 @@ Preview
         <p class="preview"> {{ result.study_time }}  </p>
         <br>
         <p class="textLable">Note: </p>
+<<<<<<< HEAD
         <p class="preview"> </p>
         <br>
+=======
+        <p class="preview"> {{ result.note }} </p>
+        <br>
+        <p class="textLable">Image URL: </p>
+        <p class="preview"> {{ result.pathfile }}  </p>
+        <br>
+        <p class="textLable">Image object: </p>
+        <p class="preview"> </p>
+        <br>
+
+>>>>>>> 387f0234c572de15ef1a0c789cc1e75ecfe0d55a
         {% if user.username == doctor_name %}
             <a href="{% url 'edit_results' user.username result.study_id%}" class="button">Edit</a>
         {% endif %}

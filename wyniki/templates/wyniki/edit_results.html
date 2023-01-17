@@ -24,8 +24,15 @@ Edit result
         <input id="time" type="time" name="time" value={{ result.study_time }} >
         <br>
         <label for="note">Note: </label>
-        <input id="note" type="text" name="note" >
+        <textarea class="textarea" id="note" name="note">{{ result.note }}</textarea>
         <br>
+        <label for="pathfile">Image URL: </label>
+        <input id="pathfile" type="text" name="pathfile" value={{ result.filepath }}>
+        <br>
+        <label for="image">Image object: </label>
+        <input id="actual-btn" type="file" name="image">
+        <br>
+
         <input type="submit" value="Edit" >
     </form>
     {{msg}}
