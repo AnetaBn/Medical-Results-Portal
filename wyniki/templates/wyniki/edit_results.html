@@ -6,7 +6,7 @@ Edit result
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
     <body>
-    <form action="" method="post">
+    <form action="" method="post" enctype = "multipart/form-data">
         {% csrf_token %}
         <label for="patient_id">Patient ID: </label>
         <input id="patient_id" type="text" name="patient_id" value={{ result.patient_id }} >
@@ -26,10 +26,16 @@ Edit result
         <label for="note">Note: </label>
         <textarea class="textarea" id="note" name="note">{{ result.note }}</textarea>
         <br>
-        <label for="pathfile">Image URL: </label>
+        <p class="textLable">Image URL: </p>
+        <p class="preview"> {{ result.pathfile | urlize }} </p>
+        <br>
+        <label for="pathfile">Replace with URL: </label>
         <input id="pathfile" type="text" name="pathfile" value={{ result.filepath }}>
         <br>
         <label for="image">Image object: </label>
+        <a href="{{result.image.url}}">Click to open image</a>
+        <br>
+        <label for="image">Replace with image: </label>
         <input id="actual-btn" type="file" name="image">
         <br>
 

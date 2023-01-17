@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('hospital', models.CharField(blank=True, max_length=64, null=True)),
                 ('study_date', models.DateField(blank=True, null=True)),
                 ('modality', models.CharField(blank=True, max_length=10, null=True)),
-                ('pathfile', models.CharField(blank=True, db_column='pathFile', max_length=100, null=True)),
+                ('imageURL', models.CharField(blank=True, db_column='pathFile', max_length=100, null=True)),
                 ('doctor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='legacy.doctor')),
                 ('patient', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='legacy.patient')),
             ],

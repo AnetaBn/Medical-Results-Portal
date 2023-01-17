@@ -47,6 +47,25 @@ CREATE TABLE study
     FOREIGN KEY (doctor_id) REFERENCES doctor(doctor_id)
 );
 
+CREATE TABLE changesHistory
+(
+	-- klucz glowny
+	change_id SERIAL, 
+	change_date DATE,
+	new_hospital VARCHAR(64),
+	new_study_date DATE,
+	new_modality VARCHAR(10),
+    new_pathFile VARCHAR(100),
+	-- klucz obcy
+	study_id BIGINT UNSIGNED,
+	doctor_id BIGINT UNSIGNED,
+	patient_id BIGINT UNSIGNED,
+
+    PRIMARY KEY(change_id),
+	FOREIGN KEY (study_id) REFERENCES study(study_id),
+	FOREIGN KEY (doctor_id) REFERENCES doctor(doctor_id)
+);
+
 -- for beginning, to remove later
 
 INSERT INTO doctor (doctor_name, specialization) VALUES ('Anna May', 'radiology'); 

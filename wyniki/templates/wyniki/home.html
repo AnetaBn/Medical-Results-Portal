@@ -15,5 +15,10 @@ Home
 {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'login' %}">Log In</a>
+    <p>or register as a new patient</p>
+    <a href="{% url 'register_patient' %}">Sign Up (Patient)</a>
+    <p>or register as a new doctor</p>
+    <a href="{% url 'register_doctor' %}">Sign Up (Doctor)</a>
 {% endif %}
+<p>{{msg}}</p>
 {% endblock %}
