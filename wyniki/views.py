@@ -4,6 +4,8 @@ from legacy.models import Doctor, Patient, Study
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 import os
+
+
 # from .models import Doctor, Patient, Study
 
 def home(request):
@@ -24,13 +26,15 @@ def hello_there(request, name):
         }
     )
 
+
 def register_patient(request):
     return render(request, "wyniki/register_patient.html"
-    )
+                  )
+
 
 def register_doctor(request):
     return render(request, "wyniki/register_doctor.html"
-)
+                  )
 
 
 def add_results(request, name):
@@ -47,6 +51,11 @@ def see_results(request, name, result_id):
     preview = Study.objects.get(study_id=result_id)
     result_date = str(preview.study_date)
     doctor_name = preview.doctor.doctor_name.replace(" ", "")
+    try:
+        img_url_msg = preview.image.url
+    except:
+        img_url_msg = False
+
     if request.method == 'POST':
         preview.hospital = request.POST.get('hospital')
         preview.study_date = request.POST.get('date')
@@ -66,13 +75,20 @@ def see_results(request, name, result_id):
             'msg': msge,
             'result': preview,
             'date': result_date,
-            'doctor_name': doctor_name
+            'doctor_name': doctor_name,
+            'img_url_msg': img_url_msg
         }
     )
+
 
 def edit_results(request, name, result_id):
     edited_result = Study.objects.get(study_id=result_id)
     result_date = str(edited_result.study_date)
+
+    try:
+        img_url_msg = edited_result.image.url
+    except:
+        img_url_msg = False
 
     if request.method == 'POST':
         if request.POST.get('patient_id') and request.POST.get('hospital') and request.POST.get(
@@ -98,7 +114,8 @@ def edit_results(request, name, result_id):
             'name': name,
             'msg': msge,
             'result': edited_result,
-            'date': result_date
+            'date': result_date,
+            'img_url_msg': img_url_msg
         }
     )
 
@@ -115,10 +132,10 @@ def create_study(request, name):
             one_study.pathfile = request.POST.get('pathfile')
             one_study.patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
             one_study.doctor = Doctor.objects.get(doctor_name=f'{request.user.first_name} {request.user.last_name}')
-            
+
             if len(request.FILES) != 0:
                 one_study.image = request.FILES['image']
-            
+
             one_study.save()
             msge = "Data inserted to study table with id: " + str(one_study.study_id)
         else:
@@ -130,7 +147,7 @@ def create_study(request, name):
                   {
                       'msg': msge,
                   }
-    )
+                  )
 
 
 # HOW TO DELETE - USEFUL COMMAND!!!
@@ -140,12 +157,16 @@ def create_study(request, name):
 def history(request, name):
     results_list = Study.objects.all()
     doctor_list = []
+    patient_results = []
     doctor_results = []
     for r in results_list:
         doctor_name = r.doctor.doctor_name.replace(" ", "")
+        patient_name = r.patient.patient_name.replace(" ", "")
         doctor_list.append(doctor_name)
         if doctor_name == name:
             doctor_results.append(r)
+        if patient_name == name:
+            patient_results.append(r)
 
     return render(
         request,
@@ -153,6 +174,7 @@ def history(request, name):
         {
             'results_list': results_list,
             'doctor_list': doctor_list,
+            'patient_results': patient_results,
             'doctor_results': doctor_results,
         }
     )
@@ -162,20 +184,21 @@ def create_patient(request):
     if request.method == 'POST':
         if request.POST.get('newUserName') and request.POST.get('firstname') and request.POST.get(
                 'lastname') and request.POST.get('age') and request.POST.get('gender') and request.POST.get(
-                'password1') and request.POST.get('password2') and request.POST.get('email'):
-            
-            if(request.POST.get('password1')==request.POST.get('password2')):
-                new_user = User.objects.create(username=request.POST.get('newUserName'), email=request.POST.get('email'), password=request.POST.get('password2'))
+            'password1') and request.POST.get('password2') and request.POST.get('email'):
+
+            if (request.POST.get('password1') == request.POST.get('password2')):
+                new_user = User.objects.create(username=request.POST.get('newUserName'),
+                                               email=request.POST.get('email'), password=request.POST.get('password2'))
                 new_user.first_name = request.POST.get('firstname')
                 new_user.last_name = request.POST.get('lastname')
                 new_user.save()
-                my_group = Group.objects.get(name='Pacjenci') 
+                my_group = Group.objects.get(name='Pacjenci')
                 my_group.user_set.add(new_user)
 
             one_person = Patient()
             one_person.patient_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
             one_person.age = request.POST.get('age')
-            one_person.gender = request.POST.get('gender')            
+            one_person.gender = request.POST.get('gender')
             one_person.save()
             msge = "Registration successful. Data inserted to patient table with id: " + str(one_person.patient_id)
         else:
@@ -187,25 +210,27 @@ def create_patient(request):
                   {
                       'msg': msge,
                   }
-    )
+                  )
+
 
 def create_doctor(request):
     if request.method == 'POST':
         if request.POST.get('newUserName') and request.POST.get('firstname') and request.POST.get(
                 'lastname') and request.POST.get('specialization') and request.POST.get(
-                'password1') and request.POST.get('password2') and request.POST.get('email'):
-            
-            if(request.POST.get('password1')==request.POST.get('password2')):
-                new_user = User.objects.create(username=request.POST.get('newUserName'), email=request.POST.get('email'), password=request.POST.get('password2'))
+            'password1') and request.POST.get('password2') and request.POST.get('email'):
+
+            if (request.POST.get('password1') == request.POST.get('password2')):
+                new_user = User.objects.create(username=request.POST.get('newUserName'),
+                                               email=request.POST.get('email'), password=request.POST.get('password2'))
                 new_user.first_name = request.POST.get('firstname')
                 new_user.last_name = request.POST.get('lastname')
                 new_user.save()
-                my_group = Group.objects.get(name='Lekarze') 
+                my_group = Group.objects.get(name='Lekarze')
                 my_group.user_set.add(new_user)
 
             one_person = Doctor()
             one_person.doctor_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
-            one_person.specialization = request.POST.get('specialization')         
+            one_person.specialization = request.POST.get('specialization')
             one_person.save()
             msge = "Registration successful. Data inserted to doctor table with id: " + str(one_person.doctor_id)
         else:
@@ -217,4 +242,4 @@ def create_doctor(request):
                   {
                       'msg': msge,
                   }
-    )
+                  )

@@ -33,7 +33,11 @@ Edit result
         <input id="pathfile" type="text" name="pathfile" value={{ result.filepath }}>
         <br>
         <label for="image">Image object: </label>
-        <a href="{{result.image.url}}">Click to open image</a>
+        {% if img_url_msg != False %}
+            <a href="{{result.image.url}}">Click to open image</a>
+        {% else %}
+            <p class="preview">None</p>
+        {% endif %}
         <br>
         <label for="image">Replace with image: </label>
         <input id="actual-btn" type="file" name="image">

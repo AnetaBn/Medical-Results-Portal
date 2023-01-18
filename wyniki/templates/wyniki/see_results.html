@@ -29,7 +29,11 @@ Preview
         <p class="preview"> {{ result.pathfile | urlize }}  </p>
         <br>
         <p class="textLable">Image: </p>
-        <a href="{{result.image.url}}">Click to open image</a>
+        {% if img_url_msg != False %}
+            <a class='preview' href="{{result.image.url}}">Click to open image</a>
+        {% else %}
+            <p class="preview">None</p>
+        {% endif %}
         <br>
 
 

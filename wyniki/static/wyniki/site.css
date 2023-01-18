@@ -106,7 +106,7 @@ input[type="submit"]{
 
 #study tr:nth-child(even){background-color: #f2f2f2;}
 
-#study tr:hover {background-color: #ddd;}
+#study tr:hover {background-color: #a8b3bd;}
 
 #study th {
   padding-top: 12px;
@@ -121,16 +121,57 @@ input[type="submit"]{
 
 }
 
+.home_table{
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+#home_table{
+    width: 20%;
+    text-align: center;
+
+}
+
+
+#home_table td, #home_table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#home_table tr:nth-child(even){
+    background-color: #f2f2f2;
+
+}
+
+#home_table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: lightslategray;
+  color: white;
+}
+
+
 .edit{
     color: lightslategray;
     cursor: pointer;
     text-align: center;
 }
 
+.edit:hover {
+    color: black;
+}
+
 .see{
     color: lightslategray;
     cursor: pointer;
     text-align: center;
+}
+
+.see:hover {
+    color: black;
 }
 
 .textarea {
@@ -145,3 +186,20 @@ a:link {
   text-decoration: none;
 }
 
+
+.homebutton {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: lightslategray;
+  color: white;
+  padding: 25px 50px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.homebutton:hover {
+  background-color: #a8b3bd;
+  color: black;
+}
