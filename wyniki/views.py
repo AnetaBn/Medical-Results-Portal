@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils.timezone import datetime
-from legacy.models import Doctor, Patient, Study
+from legacy.models import Doctor, Patient, Study, ChangesHistory
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 import os
@@ -81,9 +81,17 @@ def see_results(request, name, result_id):
     )
 
 
+def filename(self):
+        return os.path.basename(self.file.name)
+
+
+
 def edit_results(request, name, result_id):
     edited_result = Study.objects.get(study_id=result_id)
     result_date = str(edited_result.study_date)
+    
+    histEdit_study = ChangesHistory()
+    histEdit_study.his_study_id = result_id
 
     try:
         img_url_msg = edited_result.image.url
@@ -99,10 +107,30 @@ def edit_results(request, name, result_id):
             edited_result.modality = request.POST.get('type')
             edited_result.note = request.POST.get('note')
             edited_result.filepath = request.POST.get('pathfile')
+            
+            
+            histEdit_study.his_hospital = request.POST.get('hospital')
+            histEdit_study.his_study_date = request.POST.get('date')
+            histEdit_study.his_study_time = request.POST.get('time')
+            if edited_result.modality != histEdit_study.his_modality:
+                histEdit_study.his_modality = request.POST.get('type')
+            if edited_result.note != histEdit_study.his_note:
+                histEdit_study.his_note = request.POST.get('note')
+            if edited_result.filepath != histEdit_study.his_pathfile:
+                histEdit_study.his_pathfile = request.POST.get('pathfile')
+            histEdit_study.his_patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
+            histEdit_study.his_doctor = Doctor.objects.get(doctor_name=f'{request.user.first_name} {request.user.last_name}')
+
+            
             if len(request.FILES) != 0:
                 edited_result.image = request.FILES['image']
+            
 
             edited_result.save()
+            
+            histEdit_study.his_image = filename(edited_result.image)
+            histEdit_study.save()
+            
             msge = "Data updated to study table with id: " + str(edited_result.study_id)
             result_date = str(edited_result.study_date)
     else:
@@ -132,11 +160,23 @@ def create_study(request, name):
             one_study.pathfile = request.POST.get('pathfile')
             one_study.patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
             one_study.doctor = Doctor.objects.get(doctor_name=f'{request.user.first_name} {request.user.last_name}')
+            
+            hist_study = ChangesHistory()
+            hist_study.his_hospital = request.POST.get('hospital')
+            hist_study.his_study_date = request.POST.get('date')
+            hist_study.his_modality = request.POST.get('type')
+            hist_study.his_note = request.POST.get('note')
+            hist_study.his_pathfile = request.POST.get('pathfile')
+            hist_study.his_patient = Patient.objects.get(patient_id=request.POST.get('patient_id'))
+            hist_study.his_doctor = Doctor.objects.get(doctor_name=f'{request.user.first_name} {request.user.last_name}')
 
             if len(request.FILES) != 0:
                 one_study.image = request.FILES['image']
+            
+            hist_study.his_image = filename(one_study.image)
 
             one_study.save()
+            hist_study.save()
             msge = "Data inserted to study table with id: " + str(one_study.study_id)
         else:
             msge = name

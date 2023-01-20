@@ -49,11 +49,19 @@ class Study(models.Model):
         db_table = 'study'
         
 class ChangesHistory(models.Model):
-    new_study_id = models.BigAutoField(primary_key=True)
-    new_hospital = models.CharField(max_length=64, blank=True, null=True)
-    new_study_date = models.DateField(blank=True, null=True)
-    new_study_time = models.CharField(max_length=64, blank=True, null=True)
-    new_modality = models.CharField(max_length=10, blank=True, null=True)
+    his_change_id = models.BigAutoField(primary_key=True)
+    his_study_id = models.IntegerField(blank=True, null=True)
+    his_hospital = models.CharField(max_length=64, blank=True, null=True)
+    his_study_date = models.DateField(blank=True, null=True)
+    his_study_time = models.CharField(max_length=64, blank=True, null=True)
+    his_modality = models.CharField(max_length=10, blank=True, null=True)
+    his_note = models.CharField(max_length=500, blank=True, null=True)
+    his_pathfile = models.CharField(db_column='pathFile', max_length=100, blank=True, null=True)
+    his_patient = models.ForeignKey(Patient, models.DO_NOTHING, blank=True, null=True)
+    his_doctor = models.ForeignKey(Doctor, models.DO_NOTHING, blank=True, null=True)
+    his_image = models.CharField(db_column='pathToFile', max_length=500, blank=True, null=True)
+    his_change_date = models.DateTimeField('date_published', auto_now=True)
+
 
     class Meta:
         managed = True
