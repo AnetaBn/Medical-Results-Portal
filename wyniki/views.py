@@ -221,13 +221,14 @@ def history(request, name):
 
 
 def create_patient(request):
+
     if request.method == 'POST':
         if request.POST.get('newUserName') and request.POST.get('firstname') and request.POST.get(
                 'lastname') and request.POST.get('age') and request.POST.get('gender') and request.POST.get(
             'password1') and request.POST.get('password2') and request.POST.get('email'):
 
             if (request.POST.get('password1') == request.POST.get('password2')):
-                new_user = User.objects.create(username=request.POST.get('newUserName'),
+                new_user = User.objects.create_user(username=request.POST.get('newUserName'),
                                                email=request.POST.get('email'), password=request.POST.get('password2'))
                 new_user.first_name = request.POST.get('firstname')
                 new_user.last_name = request.POST.get('lastname')
@@ -235,16 +236,18 @@ def create_patient(request):
                 my_group = Group.objects.get(name='Pacjenci')
                 my_group.user_set.add(new_user)
 
-            one_person = Patient()
-            one_person.patient_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
-            one_person.age = request.POST.get('age')
-            one_person.gender = request.POST.get('gender')
-            one_person.save()
-            msge = "Registration successful. Data inserted to patient table with id: " + str(one_person.patient_id)
+                one_person = Patient()
+                one_person.patient_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
+                one_person.age = request.POST.get('age')
+                one_person.gender = request.POST.get('gender')
+                one_person.save()
+                msge = "Registration successful. Data inserted to patient table with id: " + str(one_person.patient_id)
+            else:
+                msge = "Wrong password"
         else:
-            msge = "Unsuccessful"
+            msge = "Unsuccessful operation"
     else:
-        msge = "Unsuccessful"
+        msge = "Unsuccessful operation"
 
     return render(request, 'wyniki/home.html',
                   {
@@ -260,7 +263,7 @@ def create_doctor(request):
             'password1') and request.POST.get('password2') and request.POST.get('email'):
 
             if (request.POST.get('password1') == request.POST.get('password2')):
-                new_user = User.objects.create(username=request.POST.get('newUserName'),
+                new_user = User.objects.create_user(username=request.POST.get('newUserName'),
                                                email=request.POST.get('email'), password=request.POST.get('password2'))
                 new_user.first_name = request.POST.get('firstname')
                 new_user.last_name = request.POST.get('lastname')
@@ -268,15 +271,17 @@ def create_doctor(request):
                 my_group = Group.objects.get(name='Lekarze')
                 my_group.user_set.add(new_user)
 
-            one_person = Doctor()
-            one_person.doctor_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
-            one_person.specialization = request.POST.get('specialization')
-            one_person.save()
-            msge = "Registration successful. Data inserted to doctor table with id: " + str(one_person.doctor_id)
+                one_person = Doctor()
+                one_person.doctor_name = request.POST.get('firstname') + ' ' + request.POST.get('lastname')
+                one_person.specialization = request.POST.get('specialization')
+                one_person.save()
+                msge = "Registration successful. Data inserted to doctor table with id: " + str(one_person.doctor_id)
+            else:
+                msge = "Wrong password"
         else:
-            msge = "Unsuccessful"
+            msge = "Unsuccessful operation"
     else:
-        msge = "Unsuccessful"
+        msge = "Unsuccessful operation"
 
     return render(request, 'wyniki/home.html',
                   {
