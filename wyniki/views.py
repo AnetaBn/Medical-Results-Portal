@@ -171,7 +171,14 @@ def create_study(request, name):
                   )
 
 def history(request, name):
-    results_list = Study.objects.all()
+    if 'q' in request.GET:
+        q=request.GET['q']
+        idd = Patient(patient_id=q)
+        results_list=Study.objects.filter(patient_id=idd)
+    else:
+        results_list = Study.objects.all()
+    
+        
     doctor_list = []
     patient_results = []
     doctor_results = []

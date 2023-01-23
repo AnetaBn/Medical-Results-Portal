@@ -6,6 +6,14 @@ History of results
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'wyniki/site.css' %}" />
     <body>
+        <div class="container4">
+            <form>
+               <p> <label class="container4" for="filter_id">You can search for results by patient id: </label>
+                <input type="text" name = "q" placeholder="Enter patient id...">
+                <button type="submit" class="d-inline-block" name= "search">Search</button> 
+               </p>
+            </form>
+        </div>
 {#    {% if user.username in doctor_list %}#}
         <table id="study" class="history_table">
             <tr>
@@ -15,7 +23,8 @@ History of results
                 {% else %}
                     <th><strong>Doctor</strong></th>
                 {% endif %}
-                <th><strong>Date</strong></th>
+                <th><strong>Date</strong>
+                </th> 
                 {% if request.user.groups.all.0.name == 'Lekarze' %}
                     <th>Edit</th>
                 {% endif %}

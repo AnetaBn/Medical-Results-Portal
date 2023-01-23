@@ -72,6 +72,20 @@ input[type="submit"]{
     border-radius: 7px;
     /*margin: 20px;*/
     margin-left: 50%;
+    margin-right:
+     50%;
+}
+
+input[type="sort"]{
+    background-color: lightslategray;
+    color: white;
+    border: lightslategray;
+    cursor: pointer;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 7px;
+    /*margin: 20px;*/
+    margin-left: 50%;
     margin-right: 50%;
 }
 
@@ -203,3 +217,11 @@ a:link {
   background-color: #a8b3bd;
   color: black;
 }
+
+div.container4 {
+    height: 10em;
+    position: relative ;
+    display: inline-block;
+    text-align: right;
+    margin-bottom: 0px;
+    }
